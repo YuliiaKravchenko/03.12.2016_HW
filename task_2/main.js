@@ -37,15 +37,15 @@ let StudentLU = {
     },
     getCourses: function (courses) {
         
-             return this.courses[0].title+','+this.courses[1].title+','+this.courses[2].title;
-        
- /*сделать через цикл
-        for (var i=0; i<courses.length; i++){
-            return courses[i].title;
-        }
- */        
+    // return this.courses[0].title+','+this.courses[1].title+','+this.courses[2].title;
+                 
+        let str_courses = '';
+        for (var i=0; i<this.courses.length; i++){
+            str_courses += this.courses[i].title + " ";
+        }  
+        return str_courses;
         },
-    
+   /* 
     addNewCourse: function(title, teacher, lenght, isLearned, mark){
             StudentLU.constructor.apply(this, arguments);
              this.title = title;
@@ -53,8 +53,25 @@ let StudentLU = {
              this.lenght = lenght;
              this.isLearned = isLearned;
              this.mark = []            
+        },
+     */
+    getAvarageMarkByCourse: function (courses) {
+         var sum = 0,
+             r;
+         for (var i = 0; i <this.courses.length; i++) {
+             sum += this.courses[i].mark;
+         }
+         r = sum / this.courses.length;
+         return r;
+     },
+    
+    getProgress: function () {
+        let progress ='';
+        for (var i=0; i<this.courses.length; i++){
+            progress += this.courses[i].title + ": "+this.courses[i].isLearned+" ";
+        }  
+        return progress;
         }
-       
 };
 
 let Student = Object.create(StudentLU).construstor("Rob", "White", 25);
@@ -62,6 +79,8 @@ console.log(Student);
 console.log(Student.getFullName());
 console.log(Student.getAge());
 console.log(Student.getCourses());
-console.log(Student.addNewCourse("php","Jack",170,0.1,[]));
+//console.log(Student.addNewCourse("php","Jack",170,0.1,[]));
+console.log(Student.getAvarageMarkByCourse());
+console.log(Student.getProgress());
 
 
