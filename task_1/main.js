@@ -30,11 +30,11 @@ function calculate(object) {
     for (var key in object) {
         n++;
         type = typeof (object[key]);
-        objNew["propTypes"] = type.toUpperCase();
+        objNew["propTypes"] += type.toUpperCase()+' ';
     }
     objNew["количество собственных свойств"] = n.toFixed(2);
     objNew["propNames"] = Object.keys(obj);
-   
+    objNew["propTypes"].split(",");//не работает
     console.log(objNew.propNames);
     console.log(objNew.propTypes);
     console.log(objNew["количество собственных свойств"]);
