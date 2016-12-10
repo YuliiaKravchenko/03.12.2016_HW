@@ -45,25 +45,57 @@ let StudentLU = {
         }  
         return str_courses;
         },
-   /* 
-    addNewCourse: function(title, teacher, lenght, isLearned, mark){
-            StudentLU.constructor.apply(this, arguments);
-             this.title = title;
-             this.teacher = teacher;
-             this.lenght = lenght;
-             this.isLearned = isLearned;
-             this.mark = []            
+  
+    addNewCourse: function(title, teacher, length, isLearned, mark){
+           this.courses.push ({title: title, teacher: teacher, length: length, isLearned: isLearned, mark: mark }); 
+        return this.courses;
         },
-     */
-    getAvarageMarkByCourse: function (courses) {
-         var sum = 0,
-             r;
-         for (var i = 0; i <this.courses.length; i++) {
-             sum += this.courses[i].mark;
-         }
-         r = sum / this.courses.length;
-         return r;
-     },
+     
+    getAvarageMarkByCourse: function (title) {
+        let sum = 0
+            , r;
+        for (var i = 0; i < this.courses.length; i++) {
+    
+            if (this.courses[i].title === title) {
+                if ('mark' in this.courses[i]) {
+                    this.courses[i].mark.map(function(el,i,array){
+                        sum += el;
+                    });
+                    r = sum / this.courses[i].mark.length;
+                } 
+            } 
+        }
+            return `The avarage mark ${title}: ${r}`;
+        },
+    
+    getAvarageMark: function () {
+       let newArr = [],
+           s = 0,
+           result;
+       for (var i = 0; i < this.courses.length; i++) {
+           
+           if ('mark' in this.courses[i]) {
+               newArr = newArr.concat(this.courses[i].mark);
+           }
+       }
+       newArr.forEach(function(el,i,array){
+           s += el;
+       });
+        result = s / newArr.length;
+        return `The avarage mark of all courses is ${result}`;
+   },
+    
+    addMark: function(title, mark){
+        for (var i = 0; i < this.courses.length; i++){
+            console.log(this.courses[i].title);
+            if(this.courses[i].title === title){
+                this.courses[i].mark.push(mark);
+                return `${this.courses[i].title}: ${this.courses[i].mark};`
+            } else {
+                return `This course doesn't exist`;
+            }
+        }
+    },
     
     getProgress: function () {
         let progress ='';
@@ -79,8 +111,12 @@ console.log(Student);
 console.log(Student.getFullName());
 console.log(Student.getAge());
 console.log(Student.getCourses());
-//console.log(Student.addNewCourse("php","Jack",170,0.1,[]));
-console.log(Student.getAvarageMarkByCourse());
+console.log(Student.addNewCourse("php","Jack",170,0.1,[1,4,5]));
+console.log(Student.getAvarageMarkByCourse("css"));
+console.log(Student.getAvarageMark());
+console.log(Student.addMark("JS",5));
 console.log(Student.getProgress());
 
+
+    
 
