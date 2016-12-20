@@ -52,8 +52,8 @@ let StudentLU = {
         },
      
     getAvarageMarkByCourse: function (title) {
-        let sum = 0
-            , r;
+        let sum = 0,
+            r;
         for (var i = 0; i < this.courses.length; i++) {
     
             if (this.courses[i].title === title) {
@@ -85,25 +85,30 @@ let StudentLU = {
         return `The avarage mark of all courses is ${result}`;
    },
     
-    addMark: function(title, mark){
-        for (var i = 0; i < this.courses.length; i++){
-            console.log(this.courses[i].title);
-            if(this.courses[i].title === title){
-                this.courses[i].mark.push(mark);
-                return `${this.courses[i].title}: ${this.courses[i].mark};`
-            } else {
-                return `This course doesn't exist`;
-            }
-        }
+    addMark: function (title, mark) {
+        let course = this.courses.find(course => course.title === title);
+        course.mark.push(mark);
+        return course;
     },
     
-    getProgress: function () {
-        let progress ='';
-        for (var i=0; i<this.courses.length; i++){
-            progress += this.courses[i].title + ": "+this.courses[i].isLearned+" ";
-        }  
-        return progress;
-        }
+    addProgress: function (title, length) {
+         for (var i = 0; i <= this.courses.length; i++) {
+             if (this.courses[i].title === title) {
+                 let prog = length /this.courses[i].length;
+                 console.log(prog);
+                 this.courses[i].isLearned += prog;
+                 return `${this.courses[i].title}: progress is ${this.courses[i].isLearned}`;
+             }
+         }
+     },
+
+     getProgress: function () {
+         let progress = '';
+         for (var i = 0; i < this.courses.length; i++) {
+             progress += this.courses[i].title + ": " + this.courses[i].isLearned + " ";
+         }
+         return progress;
+     }
 };
 
 let Student = Object.create(StudentLU).construstor("Rob", "White", 25);
@@ -115,6 +120,7 @@ console.log(Student.addNewCourse("php","Jack",170,0.1,[1,4,5]));
 console.log(Student.getAvarageMarkByCourse("css"));
 console.log(Student.getAvarageMark());
 console.log(Student.addMark("JS",5));
+console.log(Student.addProgress("css",20));
 console.log(Student.getProgress());
 
 
